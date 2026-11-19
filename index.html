@@ -99,6 +99,20 @@ svg{display:block}
 .d-link:hover{background:var(--soft)}
 .d-link[aria-current="page"]{background:var(--soft);font-weight:700}
 .d-link b{font-weight:500;font-size:.8rem;color:var(--faint)}
+.d-row{display:flex;align-items:center;gap:2px}
+.d-row .d-link{flex:1;min-width:0}
+.d-exp,.d-spacer{flex:none;width:34px;height:34px}
+.d-exp{display:grid;place-items:center;border:0;border-radius:9px;background:none;color:var(--faint);cursor:pointer}
+.d-exp:hover{background:var(--soft);color:var(--ink)}
+.d-exp svg{transition:transform .18s ease}
+.d-exp[aria-expanded="true"]{color:var(--ink)}
+.d-exp[aria-expanded="true"] svg{transform:rotate(90deg)}
+.d-items{list-style:none;margin:2px 0 8px 17px;padding:0 0 0 10px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:1px}
+.d-item{display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border:0;border-radius:9px;background:none;color:var(--muted);text-decoration:none;font-size:.88rem;line-height:1.35;text-align:left;cursor:pointer}
+.d-item:hover{background:var(--soft);color:var(--ink)}
+.d-item .ico{width:26px;height:26px;border-radius:8px;font-size:.62rem}
+.d-item em{margin-left:auto;font-style:normal;font-size:.72rem;color:var(--faint)}
+.d-empty{padding:6px 8px;font-size:.84rem;color:var(--faint)}
 .d-opts{display:flex;flex-direction:column;gap:10px;padding:0 10px}
 .d-info{margin:0;padding:0 10px;font-size:.84rem;color:var(--muted)}
 .d-info a{color:var(--ink)}
@@ -292,6 +306,7 @@ footer a{color:var(--muted)}
 }
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
+  .d-exp svg{transition:none}
   .card,.drawer,.scrim,.toast{transition:none}
   .card.linked:hover{transform:none}
   .flash{animation:none;outline:2px solid var(--accent)}
@@ -681,17 +696,33 @@ footer a{color:var(--muted)}
       return '<a class="rc" style="--g:'+color(it)+'" '+openAttrs(it, x.u || it.links[0][1])+'><span class="ico">'+esc(it.sym)+'</span><span><b>'+esc(it.name)+'</b><small>'+ago(x.t)+'</small></span></a>';
     }).join("");
   }
+  var expanded = {};
+  var I_CHEV = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function drawerItems(g){
+    var items = ITEMS.filter(function(it){ return it.g === g.id && shown(it); }).sort(byRecent);
+    if (!items.length) return '<li class="d-empty">거르기 조건에 맞는 게 없어요</li>';
+    return items.map(function(it){
+      var ico = '<span class="ico">'+esc(it.sym)+'</span>';
+      return it.local
+        ? '<li><button type="button" class="d-item local" data-detail="'+it.id+'" style="--g:'+color(it)+'">'+ico+esc(it.name)+'<em>PC</em></button></li>'
+        : '<li><a class="d-item" '+openAttrs(it, it.links[0][1])+' style="--g:'+color(it)+'">'+ico+esc(it.name)+(it.pub ? '<em>공개</em>' : "")+'</a></li>';
+    }).join("");
+  }
   function countFor(g){ return ITEMS.filter(function(it){ return shown(it) && it.g === g; }).length; }
   function renderControls(){
     var visible = ITEMS.filter(shown);
     var cur = state.q ? "" : state.page;
     var tabs = '<a class="tab" href="#home"'+(cur==="home"?' aria-current="page"':"")+'>홈</a>';
-    var dp = '<a class="d-link" href="#home"'+(cur==="home"?' aria-current="page"':"")+'><span>홈</span><b>'+visible.length+'</b></a>';
+    var dp = '<div class="d-row"><a class="d-link" href="#home"'+(cur==="home"?' aria-current="page"':"")+'><span>홈</span><b>'+visible.length+'</b></a><span class="d-spacer"></span></div>';
     var chips = "";
     GROUPS.forEach(function(g){
       var n = countFor(g.id), loc = g.id === "local" ? " local" : "", on = cur === g.id;
       tabs += '<a class="tab'+loc+'" href="#'+g.id+'" style="--g:'+g.color+'"'+(on?' aria-current="page"':"")+'><i class="dot"></i>'+esc(g.name)+' <b>'+n+'</b></a>';
-      dp += '<a class="d-link'+loc+'" href="#'+g.id+'" style="--g:'+g.color+'"'+(on?' aria-current="page"':"")+'><span><i class="dot"></i>'+esc(g.name)+'</span><b>'+n+'</b></a>';
+      var ex = !!expanded[g.id];
+      dp += '<div class="d-group'+loc+'" style="--g:'+g.color+'"><div class="d-row">'+
+        '<a class="d-link" href="#'+g.id+'"'+(on?' aria-current="page"':"")+'><span><i class="dot"></i>'+esc(g.name)+'</span><b>'+n+'</b></a>'+
+        '<button type="button" class="d-exp" data-exp="'+g.id+'" aria-expanded="'+ex+'" aria-controls="dg-'+g.id+'" aria-label="'+esc(g.name)+' 항목 '+(ex?"접기":"펼치기")+'">'+I_CHEV+'</button></div>'+
+        '<ul class="d-items" id="dg-'+g.id+'"'+(ex?"":" hidden")+'>'+drawerItems(g)+'</ul></div>';
       chips += '<a class="chip'+loc+'" href="#'+g.id+'" style="--g:'+g.color+'"><i class="dot"></i>'+esc(g.name)+' <b>'+n+'</b></a>';
     });
     $("tabs").innerHTML = tabs; $("d-pages").innerHTML = dp; $("chips").innerHTML = chips;
@@ -882,6 +913,12 @@ footer a{color:var(--muted)}
       save(); setTimeout(renderRecent, 300); return;
     }
     var b;
+    if ((b = t.closest("[data-exp]"))) {
+      var gid = b.dataset.exp, ex = !expanded[gid]; expanded[gid] = ex;
+      b.setAttribute("aria-expanded", ex); b.setAttribute("aria-label", groupById[gid].name+" 항목 "+(ex?"접기":"펼치기"));
+      $("dg-"+gid).hidden = !ex;
+      return;
+    }
     if ((b = t.closest("[data-fav]"))) {
       var fid = b.dataset.fav, i = state.favs.indexOf(fid);
       if (i > -1) state.favs.splice(i, 1); else state.favs.push(fid);
@@ -890,7 +927,7 @@ footer a{color:var(--muted)}
       toast(i > -1 ? "즐겨찾기에서 뺐어요" : "즐겨찾기에 넣었어요");
       return;
     }
-    if ((b = t.closest("[data-detail]"))) { openDetail(b.dataset.detail, false); return; }
+    if ((b = t.closest("[data-detail]"))) { if (drawer.contains(b)) closeMenu(false); openDetail(b.dataset.detail, false); return; }
     if ((b = t.closest("[data-copy]"))) { copy(b.dataset.copy); return; }
     if ((b = t.closest("[data-close]"))) { closeDetail(); return; }
     if ((b = t.closest("[data-pick]"))) { pickRandom(); return; }
