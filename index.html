@@ -304,7 +304,70 @@ footer a{color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:28px;z-index:70;transform:translate(-50%,16px);opacity:0;pointer-events:none;padding:11px 18px;border-radius:12px;background:var(--ink);color:var(--surface);font-size:.88rem;font-weight:500;box-shadow:var(--shadow);transition:opacity .2s ease,transform .2s ease}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
+/* ===== polish: layered, glassy, app-icon look ===== */
+:root{--glass:rgb(255 255 255 / .72);--glass-line:rgb(255 255 255 / .9);
+  --lift:0 1px 1px rgb(20 30 60 / .04),0 2px 6px -2px rgb(20 30 60 / .06),0 14px 32px -14px rgb(20 30 60 / .18);
+  --lift-hi:0 1px 1px rgb(20 30 60 / .05),0 6px 14px -4px rgb(20 30 60 / .10),0 26px 48px -18px rgb(20 30 60 / .28)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--glass:rgb(28 31 38 / .72);--glass-line:rgb(255 255 255 / .06);
+  --lift:0 1px 1px rgb(0 0 0 / .3),0 14px 32px -14px rgb(0 0 0 / .7);--lift-hi:0 1px 1px rgb(0 0 0 / .3),0 26px 48px -18px rgb(0 0 0 / .85)}}
+:root[data-theme="dark"]{--glass:rgb(28 31 38 / .72);--glass-line:rgb(255 255 255 / .06);
+  --lift:0 1px 1px rgb(0 0 0 / .3),0 14px 32px -14px rgb(0 0 0 / .7);--lift-hi:0 1px 1px rgb(0 0 0 / .3),0 26px 48px -18px rgb(0 0 0 / .85)}
+body{background:
+  radial-gradient(900px 520px at 8% -8%,color-mix(in srgb,var(--g-study) 16%,transparent),transparent 70%),
+  radial-gradient(800px 480px at 100% 0%,color-mix(in srgb,var(--g-game) 12%,transparent),transparent 70%),
+  radial-gradient(900px 700px at 60% 110%,color-mix(in srgb,var(--g-research) 10%,transparent),transparent 70%),
+  var(--bg);background-attachment:fixed}
+.top-wrap{background:color-mix(in srgb,var(--surface) 70%,transparent);border-bottom-color:color-mix(in srgb,var(--line) 70%,transparent)}
+h1{background:linear-gradient(120deg,var(--ink) 30%,color-mix(in srgb,var(--accent) 70%,var(--ink)));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ico{background:linear-gradient(145deg,color-mix(in srgb,var(--g) 62%,#fff) 0%,var(--g) 55%,color-mix(in srgb,var(--g) 82%,#000) 100%);
+  color:#fff;text-shadow:0 1px 1px rgb(0 0 0 / .18);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .45),inset 0 -2px 4px rgb(0 0 0 / .10),0 6px 12px -6px color-mix(in srgb,var(--g) 80%,transparent)}
+.local .ico{background:linear-gradient(145deg,#c9ced6,#9aa2ad);color:#fff}
+.card,.panel{background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--lift);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4)}
+.panel.local{background:color-mix(in srgb,var(--glass) 60%,transparent);border:1px dashed var(--line);box-shadow:none}
+.card.linked:hover{box-shadow:var(--lift-hi);transform:translateY(-3px);border-color:var(--glass-line)}
+.feat{overflow:hidden;padding:18px}
+.feat::before{content:"";position:absolute;inset:0 0 auto 0;height:90px;background:linear-gradient(180deg,color-mix(in srgb,var(--g) 16%,transparent),transparent);pointer-events:none;border-radius:inherit}
+.feat .ico.lg{width:56px;height:56px;border-radius:16px;font-size:1rem}
+.feat .btns{position:relative;z-index:2}
+.panel{padding:12px 10px 10px;border-radius:20px}
+.panel h3{margin:4px 10px 8px}
+.ci{flex-direction:column;align-items:stretch;gap:0;padding:0;border-radius:12px;transition:background .15s ease}
+.ci:hover{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.ci.open{background:color-mix(in srgb,var(--surface) 80%,transparent);box-shadow:var(--lift)}
+.ci-row{display:flex;align-items:center;gap:6px;padding:7px 6px 7px 8px}
+.chev{flex:none;width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:9px;background:none;color:var(--faint);cursor:pointer}
+.chev:hover{background:var(--soft);color:var(--ink)}
+.chev svg{transition:transform .2s ease}
+.chev[aria-expanded="true"]{color:var(--ink)}
+.chev[aria-expanded="true"] svg{transform:rotate(90deg)}
+.acc{padding:2px 12px 14px 53px}
+.det{display:flex;flex-direction:column;gap:12px}
+.det .desc{font-size:.86rem}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.facts div{display:flex;gap:6px;align-items:baseline;padding:4px 10px;border-radius:999px;background:var(--soft);font-size:.76rem}
+.facts dt{color:var(--faint)}
+.facts dd{margin:0;font-weight:600}
+.det-links{display:flex;flex-wrap:wrap;gap:6px}
+.det .btn{height:32px;padding:0 12px;font-size:.82rem;border-radius:9px}
+.btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 88%,#fff),var(--accent));box-shadow:inset 0 1px 0 rgb(255 255 255 / .3),0 6px 14px -6px color-mix(in srgb,var(--accent) 80%,transparent)}
+.btn.icon{width:32px;padding:0}
+.btn.icon[aria-pressed="true"]{color:var(--star)}
+.fb{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:14px;background:color-mix(in srgb,var(--soft) 70%,transparent);border:1px solid var(--line)}
+.fb-title{margin:0;font-size:.84rem;font-weight:700}
+.fb-kinds{display:flex;flex-wrap:wrap;gap:6px}
+.fb-kinds button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:.8rem;color:var(--muted);cursor:pointer}
+.fb-kinds button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--surface));font-weight:600}
+.fb textarea{width:100%;min-height:70px;resize:vertical;font:inherit;font-size:.86rem;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.fb textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.fb-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fb-foot small{font-size:.74rem;color:var(--faint)}
+.rc{background:var(--glass);border-color:var(--glass-line);box-shadow:var(--lift);backdrop-filter:blur(12px)}
+dialog{background:var(--surface)}
+.dlg .det{gap:14px}
+
 @media (max-width:640px){
+  .acc{padding:2px 10px 12px 10px}
   body{font-size:14.5px}
   .bar{padding:0 8px}
   .brand span{display:none}
@@ -628,20 +691,47 @@ footer a{color:var(--muted)}
   }
 
   // ---------- pieces ----------
+  var accOpen = {}, accSeq = 0;
+  var I_CHEV = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var REPO_ISSUES = "https://github.com/seoyulwoo1206/seoyulwoo1206.github.io/issues/new";
+  var FB_KINDS = [["like","좋아요"],["idea","바라는 점"],["bug","버그 신고"]];
+  function availability(it){ return it.local ? "아직 PC에만" : it.pub ? "누구나 열기" : "서율 계정만"; }
+  function detailHTML(it){
+    var facts = '<dl class="facts"><div><dt>분류</dt><dd>'+esc(groupById[it.g].name)+'</dd></div><div><dt>종류</dt><dd>'+esc(it.kind)+'</dd></div>'+
+      (it.d ? '<div><dt>업데이트</dt><dd>'+niceDate(it.d)+'</dd></div>' : "")+'<div><dt>열람</dt><dd>'+availability(it)+'</dd></div></dl>';
+    var links = it.local ? "" : '<div class="det-links">'+it.links.map(function(l, i){
+        return '<a class="btn'+(i===0?" primary":"")+'" '+openAttrs(it, l[1])+'>'+esc(l[0])+' ↗</a>';
+      }).join("")+'<button type="button" class="btn" data-copy="'+esc(it.links[0][1])+'">링크 복사</button>'+
+      '<button type="button" class="btn" data-detail="'+it.id+'">QR</button>'+
+      '<button type="button" class="btn icon" data-fav="'+it.id+'" aria-pressed="'+isFav(it)+'" aria-label="'+(isFav(it)?"즐겨찾기에서 빼기":"즐겨찾기에 넣기")+'">'+(isFav(it)?I_STAR_ON:I_STAR)+'</button></div>';
+    var kinds = FB_KINDS.map(function(k, i){ return '<button type="button" data-fbkind="'+k[0]+'" aria-pressed="'+(i===0)+'">'+k[1]+'</button>'; }).join("");
+    var fb = '<form class="fb" data-fb="'+it.id+'" data-kind="like"><p class="fb-title">피드백 보내기</p><div class="fb-kinds" role="group" aria-label="피드백 종류">'+kinds+'</div>'+
+      '<label class="sr" for="fb-'+it.id+'-'+(++accSeq)+'">피드백 내용</label><textarea id="fb-'+it.id+'-'+accSeq+'" placeholder="써 보고 느낀 점, 바라는 기능, 버그를 적어 주세요"></textarea>'+
+      '<div class="fb-foot"><small>깃허브 이슈로 서율에게 전달돼요</small><a class="btn primary fb-send" target="_blank" rel="noopener" href="'+fbURL(it, "like", "")+'">보내기</a></div></form>';
+    return '<div class="det"><p class="desc">'+esc(it.desc)+'</p>'+facts+links+fb+'</div>';
+  }
+  function fbURL(it, kind, msg){
+    var label = (FB_KINDS.filter(function(k){ return k[0] === kind; })[0] || FB_KINDS[0])[1];
+    var title = "["+label+"] "+it.name;
+    var body = "앱: "+it.name+"\n종류: "+label+"\n\n"+(msg || "");
+    return REPO_ISSUES+"?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body);
+  }
   function ciHTML(it, opt){
     opt = opt || {};
     var cm = '<span class="cm">'+(opt.group ? '<i class="dot"></i>'+esc(groupById[it.g].name)+'<span class="sep">·</span>' : "")+
       esc(it.kind)+'<span class="sep">·</span>'+(it.local ? "PC 작업" : niceDate(it.d))+(it.pub ? '<span class="badge">공개</span>' : "")+'</span>';
     var inner = '<span class="ico">'+esc(it.sym)+'</span><span class="ct"><span class="name">'+esc(it.name)+'</span>'+cm+(opt.desc ? '<span class="desc">'+esc(it.desc)+'</span>' : "")+'</span>';
-    var main = it.local ? '<div class="main">'+inner+'</div>' : '<a class="main" '+openAttrs(it, it.links[0][1])+'>'+inner+'</a>';
-    return '<li class="ci'+(it.local?" local":"")+(opt.desc?" big":"")+'" data-id="'+it.id+'" style="--g:'+color(it)+'">'+main+
-      '<span class="acts">'+(it.local ? "" : starBtn(it))+moreBtn(it)+'</span></li>';
+    var main = it.local ? '<button type="button" class="main" data-acc="'+it.id+'" style="border:0;background:none;padding:0;text-align:left;cursor:pointer">'+inner+'</button>' : '<a class="main" '+openAttrs(it, it.links[0][1])+'>'+inner+'</a>';
+    var open = !!accOpen[it.id], aid = "acc-"+it.id+"-"+(++accSeq);
+    return '<li class="ci'+(it.local?" local":"")+(opt.desc?" big":"")+(open?" open":"")+'" data-id="'+it.id+'" style="--g:'+color(it)+'">'+
+      '<div class="ci-row">'+main+'<button type="button" class="chev" data-acc="'+it.id+'" aria-expanded="'+open+'" aria-controls="'+aid+'" aria-label="'+esc(it.name)+' 세부 정보와 피드백">'+I_CHEV+'</button></div>'+
+      '<div class="acc" id="'+aid+'"'+(open?"":" hidden")+'>'+(open ? detailHTML(it) : "")+'</div></li>';
   }
   function listHTML(items, showGroup){
     return '<div class="panel"><ul class="rows">'+items.map(function(it){ return ciHTML(it, {desc:true, group:showGroup}); }).join("")+'</ul></div>';
   }
   function featHTML(it){
-    var btns = '<a class="btn primary" '+openAttrs(it, it.links[0][1])+'>열기</a><button type="button" class="btn" data-detail="'+it.id+'">자세히</button>';
+    var btns = '<a class="btn primary" '+openAttrs(it, it.links[0][1])+'>열기</a><button type="button" class="btn" data-detail="'+it.id+'">자세히 ›</button>';
     return '<article class="card feat linked" data-id="'+it.id+'" style="--g:'+color(it)+'">'+
       '<div class="card-top"><span class="ico lg">'+esc(it.sym)+'</span><span class="acts">'+starBtn(it)+'</span></div>'+
       '<span class="name">'+esc(it.name)+'</span><p class="desc">'+esc(it.desc)+'</p><div class="btns">'+btns+'</div></article>';
@@ -826,7 +916,7 @@ footer a{color:var(--muted)}
     dlgIsPick = !!pick;
     var g = groupById[it.g];
     dlg.style.setProperty("--g", g.color);
-    var links = it.local ? '<p class="desc">아직 링크가 없어요. PC에서 만들고 있는 프로젝트예요.</p>' :
+    var links_unused = it.local ? "" :
       '<ul class="dlinks">'+it.links.map(function(l){
         return '<li><div><a '+openAttrs(it, l[1])+'>'+esc(l[0])+'</a><small>'+esc(host(l[1]))+'</small></div><button type="button" class="btn" data-copy="'+esc(l[1])+'">복사</button></li>';
       }).join("")+'</ul>';
@@ -836,9 +926,8 @@ footer a{color:var(--muted)}
       (pick ? '<p class="dlg-pick">오늘은 이거 어때요?</p>' : "")+
       '<div class="dlg-head"><span class="ico lg">'+esc(it.sym)+'</span><div><p class="meta-line"><i class="dot"></i>'+metaParts(it, true)+(it.pub ? '<span class="badge">공개</span>' : "")+'</p><h3 id="dlg-title">'+esc(it.name)+'</h3></div>'+
       '<button type="button" class="icon-btn" data-close aria-label="닫기">'+I_X+'</button></div>'+
-      '<p class="desc">'+esc(it.desc)+'</p>'+links+qr+
-      '<div class="dlg-foot">'+(it.local ? "<span></span>" : '<button type="button" class="btn" data-fav="'+it.id+'" aria-pressed="'+isFav(it)+'">'+(isFav(it) ? "즐겨찾기에서 빼기" : "즐겨찾기에 넣기")+'</button>')+
-      (pick ? '<button type="button" class="btn" data-pick>다른 거 고르기</button>' : '<button type="button" class="btn" data-locate="'+it.id+'">분류에서 보기</button>')+'</div></div>';
+      detailHTML(it).replace('<div class="det">', '<div class="det">'+qr)+
+      (pick ? '<div class="dlg-foot"><span></span><button type="button" class="btn" data-pick>다른 거 고르기</button></div>' : "")+'</div>';
     if (canQR) {
       try { var code = window.qrcode(0, "M"); code.addData(it.links[0][1]); code.make(); $("qr-box").innerHTML = code.createSvgTag({cellSize: 4, margin: 0, scalable: true}); }
       catch(e){ var q = dlgBody.querySelector(".qr"); if (q) q.remove(); }
@@ -890,6 +979,24 @@ footer a{color:var(--muted)}
       save(); setTimeout(renderRecent, 300); return;
     }
     var b;
+    if ((b = t.closest("[data-acc]"))) {
+      var li = b.closest(".ci"), aid2 = li.querySelector(".chev").getAttribute("aria-controls"), acc = $(aid2), aidItem = b.dataset.acc;
+      var nowOpen = acc.hidden;
+      accOpen[aidItem] = nowOpen; li.classList.toggle("open", nowOpen);
+      li.querySelector(".chev").setAttribute("aria-expanded", nowOpen);
+      acc.innerHTML = nowOpen ? detailHTML(byId[aidItem]) : ""; acc.hidden = !nowOpen;
+      return;
+    }
+    if ((b = t.closest("[data-fbkind]"))) {
+      var form = b.closest(".fb"); form.dataset.kind = b.dataset.fbkind;
+      form.querySelectorAll("[data-fbkind]").forEach(function(x){ x.setAttribute("aria-pressed", x === b); });
+      updateFb(form); return;
+    }
+    if ((b = t.closest(".fb-send"))) {
+      var f2 = b.closest(".fb");
+      if (!f2.querySelector("textarea").value.trim()) { e.preventDefault(); toast("내용을 먼저 적어 주세요"); f2.querySelector("textarea").focus(); return; }
+      toast("깃허브에서 '제출'을 누르면 전달돼요"); return;
+    }
     if ((b = t.closest("[data-exp]"))) {
       var gid = b.dataset.exp, ex = !expanded[gid]; expanded[gid] = ex;
       b.setAttribute("aria-expanded", ex); b.setAttribute("aria-label", groupById[gid].name+" 항목 "+(ex?"접기":"펼치기"));
@@ -916,6 +1023,12 @@ footer a{color:var(--muted)}
       return;
     }
   });
+  function updateFb(form){
+    var it = byId[form.dataset.fb];
+    form.querySelector(".fb-send").href = fbURL(it, form.dataset.kind, form.querySelector("textarea").value.trim());
+  }
+  document.addEventListener("input", function(e){ var f = e.target.closest(".fb"); if (f) updateFb(f); });
+  document.addEventListener("submit", function(e){ if (e.target.closest(".fb")) e.preventDefault(); });
   document.addEventListener("change", function(e){
     var c = e.target.closest("[data-toggle]"); if (!c) return;
     state[c.dataset.toggle] = c.checked; save(); renderControls(); renderBoard(); renderPage();
