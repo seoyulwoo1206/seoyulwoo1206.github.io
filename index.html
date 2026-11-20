@@ -131,11 +131,33 @@ svg{display:block}
 .chip:hover{background:var(--soft)}
 
 /* ---------- page ---------- */
-.wrap{max-width:1120px;margin:0 auto;padding:36px 20px 72px;display:flex;flex-direction:column;gap:52px}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 64px;display:flex;flex-direction:column;gap:32px}
 section[id]{scroll-margin-top:calc(var(--bar-h) + 56px)}
-.hero{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px}
-.stamp{margin:0 0 8px;font-size:.82rem;color:var(--faint)}
-h1{margin:0;font-size:clamp(1.75rem,3.8vw,2.4rem);font-weight:800;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+.hero{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.stamp{margin:0;font-size:.86rem;color:var(--faint)}
+h1{margin:0;font-size:clamp(1.5rem,3vw,1.9rem);font-weight:800;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+.panels{columns:3 300px;column-gap:14px}
+.panel{break-inside:avoid;margin:0 0 14px;padding:10px 8px 8px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.panel.local{background:transparent;border-style:dashed}
+.panel h3{display:flex;align-items:center;gap:8px;margin:4px 8px 6px;font-size:.92rem;font-weight:700;letter-spacing:-.02em}
+.panel h3 span{font-size:.8rem;font-weight:500;color:var(--faint)}
+.panel h3 a{margin-left:auto;font-size:.8rem;font-weight:500;color:var(--faint);text-decoration:none}
+.panel h3 a:hover{color:var(--ink)}
+.rows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.ci{position:relative;display:flex;align-items:center;gap:11px;padding:7px 8px;border-radius:10px}
+.ci:hover{background:var(--soft)}
+.ci .ico{width:34px;height:34px;border-radius:10px;font-size:.7rem}
+.ci .ct{flex:1;min-width:0;display:flex;flex-direction:column}
+.ci .name{font-size:.92rem;font-weight:600;line-height:1.35}
+.ci .cm{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--faint)}
+.ci .desc{font-size:.82rem;margin-top:2px}
+.ci.local .name{color:var(--muted)}
+.ci .acts{margin:0}
+.ci .main{flex:1;min-width:0;display:flex;flex-direction:row;align-items:center;gap:11px;color:inherit;text-decoration:none}
+.ci a.main::after{display:none}
+.ci.big{padding:12px 10px}
+.ci.big .ico{width:40px;height:40px;border-radius:11px;font-size:.78rem}
+@media (hover:hover){ .ci .acts .mini{opacity:0;transition:opacity .15s ease} .ci:hover .acts .mini,.ci:focus-within .acts .mini,.ci .acts .mini[aria-pressed="true"]{opacity:1} }
 .lede{margin:8px 0 0;color:var(--muted);font-size:1rem}
 .counts{display:flex;flex-wrap:wrap;gap:8px;margin:0}
 .counts div{display:flex;flex-direction:column-reverse;gap:2px;min-width:96px;padding:12px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
@@ -186,8 +208,10 @@ a.main::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inher
 @keyframes flash{50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}}
 
 /* featured */
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-.feat{padding:22px}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.feat{padding:16px}
+.feat .card-top{margin-bottom:8px}
+.feat .btns{padding-top:12px}
 .feat .name{font-size:1.1rem}
 .feat .desc{margin-top:4px}
 .feat .meta{margin-top:0;padding-top:12px}
@@ -296,7 +320,9 @@ footer a{color:var(--muted)}
   .ico{width:36px;height:36px;border-radius:10px;font-size:.78rem}
   .name{font-size:.94rem}
   .desc{font-size:.82rem}
-  .feat-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .feat .desc{display:none}
+  .panels{columns:1}
   .feat{padding:18px}
   .row{grid-template-columns:36px 1fr auto;gap:12px;padding:11px 12px}
   .row .ico{width:36px;height:36px}
@@ -352,17 +378,10 @@ footer a{color:var(--muted)}
       <a class="d-link" href="#favs" id="d-favs"><span>즐겨찾기</span><b id="n-favs"></b></a>
       <a class="d-link" href="#recent" id="d-recent"><span>최근 연 것</span><b id="n-recent"></b></a>
       <a class="d-link" href="#all"><span>전체 목록</span><b id="n-all"></b></a>
-      <a class="d-link" href="#timeline"><span>타임라인</span></a>
     </div>
     <div class="d-sec">
       <p class="d-label">보기</p>
       <div class="d-opts">
-        <div class="seg" role="group" aria-label="보기 방식">
-          <button type="button" data-set="view:grid">카드</button><button type="button" data-set="view:list">목록</button>
-        </div>
-        <div class="seg" role="group" aria-label="정렬">
-          <button type="button" data-set="sort:group">분류별</button><button type="button" data-set="sort:recent">최근 수정순</button>
-        </div>
         <label class="check" for="d-docs"><input type="checkbox" id="d-docs" data-toggle="docs"> 문서·슬라이드·디자인도 보기</label>
         <label class="check" for="d-pub"><input type="checkbox" id="d-pub" data-toggle="pubOnly"> 누구나 열 수 있는 것만</label>
       </div>
@@ -385,59 +404,32 @@ footer a{color:var(--muted)}
 
 <main class="wrap" id="top">
   <section class="hero home-only" aria-label="소개">
-    <div>
-      <p class="stamp">2026.11.19 기준</p>
-      <h1>서율이 만든 것들</h1>
-      <p class="lede">직접 만든 게임, 앱, 공부 도구, 연구 자료를 한곳에 모았어요.</p>
-    </div>
-    <dl class="counts" id="counts"></dl>
+    <h1>서율이 만든 것들</h1>
+    <p class="stamp" id="counts"></p>
   </section>
 
   <section class="sec home-only" id="featured">
-    <div class="sec-head"><h2>대표작 <span id="feat-n"></span></h2><p>누구나 바로 열 수 있어요</p></div>
+    <div class="sec-head"><h2>대표작 <span id="feat-n"></span></h2></div>
     <div class="feat-grid" id="feat-grid"></div>
   </section>
 
   <section class="sec home-only" id="favs" hidden>
-    <div class="sec-head"><h2>즐겨찾기 <span id="favs-n"></span></h2><p>별표한 것들</p></div>
-    <div class="grid" id="favs-grid"></div>
+    <div class="sec-head"><h2>즐겨찾기 <span id="favs-n"></span></h2></div>
+    <div class="recent" id="favs-grid"></div>
   </section>
 
   <section class="sec home-only" id="recent" hidden>
-    <div class="sec-head"><h2>최근 연 것</h2><p>이 브라우저에서 연 순서</p></div>
+    <div class="sec-head"><h2>최근 연 것</h2></div>
     <div class="recent" id="recent-list"></div>
   </section>
 
   <section class="sec" id="all">
     <div class="sec-head"><h2 id="all-title">전체 목록</h2></div>
-    <div class="chips" id="chips" aria-label="분류별 페이지로 가기"></div>
-    <div class="toolbar">
-      <div class="seg" role="group" aria-label="보기 방식">
-        <button type="button" data-set="view:grid">카드</button><button type="button" data-set="view:list">목록</button>
-      </div>
-      <div class="seg" role="group" aria-label="정렬">
-        <button type="button" data-set="sort:group">분류별</button><button type="button" data-set="sort:recent">최근 수정순</button>
-      </div>
-      <label class="check" for="t-docs"><input type="checkbox" id="t-docs" data-toggle="docs"> 문서·슬라이드·디자인도 보기</label>
-      <label class="check" for="t-pub"><input type="checkbox" id="t-pub" data-toggle="pubOnly"> 누구나 열 수 있는 것만</label>
-    </div>
     <div id="board" aria-live="polite"></div>
-  </section>
-
-  <section class="sec home-only" id="timeline">
-    <div class="sec-head"><h2>타임라인</h2><p>마지막으로 고친 날 기준 · 막대 색은 분류</p></div>
-    <div class="months" id="months"></div>
   </section>
 
   <section class="sec off" id="page" aria-labelledby="page-title">
     <div class="page-head" id="page-head"></div>
-    <div class="toolbar">
-      <div class="seg" role="group" aria-label="보기 방식">
-        <button type="button" data-set="view:grid">카드</button><button type="button" data-set="view:list">목록</button>
-      </div>
-      <label class="check" for="p-docs"><input type="checkbox" id="p-docs" data-toggle="docs"> 문서·슬라이드·디자인도 보기</label>
-      <label class="check" for="p-pub"><input type="checkbox" id="p-pub" data-toggle="pubOnly"> 누구나 열 수 있는 것만</label>
-    </div>
     <div id="page-board" aria-live="polite"></div>
     <nav class="pager" id="pager" aria-label="다른 분류"></nav>
   </section>
@@ -636,44 +628,29 @@ footer a{color:var(--muted)}
   }
 
   // ---------- pieces ----------
-  function tileHTML(it, showGroup){
-    var top = '<div class="card-top"><span class="ico">'+esc(it.sym)+'</span><span class="acts">'+(it.local ? "" : starBtn(it))+moreBtn(it)+'</span></div>';
-    var name = '<span class="name">'+esc(it.name)+'</span>';
-    var main = it.local ? '<div class="main">'+name+'</div>' : '<a class="main" '+openAttrs(it, it.links[0][1])+'>'+name+'</a>';
-    var more = (!it.local && it.links.length > 1) ? '<div class="more">'+it.links.map(function(l){ return '<a '+openAttrs(it, l[1])+'>'+esc(l[0])+'</a>'; }).join("")+'</div>' : "";
-    return '<article class="card tile'+(it.local?" local":" linked")+'" data-id="'+it.id+'" style="--g:'+color(it)+'">'+top+main+'<p class="desc">'+esc(it.desc)+'</p>'+more+metaHTML(it, showGroup)+'</article>';
-  }
-  function rowHTML(it, showGroup){
-    var name = '<span class="name">'+esc(it.name)+'</span>';
-    var main = it.local ? '<div class="main">'+name+'</div>' : '<a class="main" '+openAttrs(it, it.links[0][1])+'>'+name+'</a>';
-    return '<article class="row'+(it.local?" local":"")+'" data-id="'+it.id+'" style="--g:'+color(it)+'">'+
-      '<span class="ico">'+esc(it.sym)+'</span><div class="rbody">'+main+'<p class="desc">'+esc(it.desc)+'</p></div>'+
-      '<span class="rmeta"><i class="dot"></i>'+metaParts(it, showGroup)+(it.pub ? '<span class="badge">공개</span>' : "")+'</span>'+
-      '<span class="acts">'+(it.local ? "" : starBtn(it))+moreBtn(it)+'</span></article>';
+  function ciHTML(it, opt){
+    opt = opt || {};
+    var cm = '<span class="cm">'+(opt.group ? '<i class="dot"></i>'+esc(groupById[it.g].name)+'<span class="sep">·</span>' : "")+
+      esc(it.kind)+'<span class="sep">·</span>'+(it.local ? "PC 작업" : niceDate(it.d))+(it.pub ? '<span class="badge">공개</span>' : "")+'</span>';
+    var inner = '<span class="ico">'+esc(it.sym)+'</span><span class="ct"><span class="name">'+esc(it.name)+'</span>'+cm+(opt.desc ? '<span class="desc">'+esc(it.desc)+'</span>' : "")+'</span>';
+    var main = it.local ? '<div class="main">'+inner+'</div>' : '<a class="main" '+openAttrs(it, it.links[0][1])+'>'+inner+'</a>';
+    return '<li class="ci'+(it.local?" local":"")+(opt.desc?" big":"")+'" data-id="'+it.id+'" style="--g:'+color(it)+'">'+main+
+      '<span class="acts">'+(it.local ? "" : starBtn(it))+moreBtn(it)+'</span></li>';
   }
   function listHTML(items, showGroup){
-    return state.view === "list"
-      ? '<div class="list">'+items.map(function(it){ return rowHTML(it, showGroup); }).join("")+'</div>'
-      : '<div class="grid">'+items.map(function(it){ return tileHTML(it, showGroup); }).join("")+'</div>';
+    return '<div class="panel"><ul class="rows">'+items.map(function(it){ return ciHTML(it, {desc:true, group:showGroup}); }).join("")+'</ul></div>';
   }
   function featHTML(it){
-    var btns = it.links.map(function(l, i){ return '<a class="btn'+(i===0?" primary":"")+'" '+openAttrs(it, l[1])+'>'+esc(l[0])+'</a>'; }).join("");
-    btns += '<button type="button" class="btn" data-detail="'+it.id+'">QR · 공유</button>';
+    var btns = '<a class="btn primary" '+openAttrs(it, it.links[0][1])+'>열기</a><button type="button" class="btn" data-detail="'+it.id+'">자세히</button>';
     return '<article class="card feat linked" data-id="'+it.id+'" style="--g:'+color(it)+'">'+
       '<div class="card-top"><span class="ico lg">'+esc(it.sym)+'</span><span class="acts">'+starBtn(it)+'</span></div>'+
-      '<span class="name">'+esc(it.name)+'</span><p class="desc">'+esc(it.desc)+'</p>'+
-      '<div class="meta"><i class="dot"></i>'+metaParts(it, true)+'</div><div class="btns">'+btns+'</div></article>';
+      '<span class="name">'+esc(it.name)+'</span><p class="desc">'+esc(it.desc)+'</p><div class="btns">'+btns+'</div></article>';
   }
 
   // ---------- renders ----------
   function renderCounts(){
-    var pub = 0, claude = 0, docs = 0, local = 0;
-    ITEMS.forEach(function(it){ if (it.local) local++; else if (it.pub) pub++; else if (isDoc(it)) docs++; else claude++; });
-    $("counts").innerHTML =
-      "<div><dt>공개 앱·게임</dt><dd>"+pub+"</dd></div>"+
-      "<div><dt>클로드 사이트</dt><dd>"+claude+"</dd></div>"+
-      "<div><dt>문서·발표</dt><dd>"+docs+"</dd></div>"+
-      "<div><dt>PC 작업</dt><dd>"+local+"</dd></div>";
+    var pub = ITEMS.filter(function(it){ return it.pub; }).length;
+    $("counts").textContent = "모두 "+ITEMS.length+"개 · 누구나 열 수 있는 것 "+pub+"개 · 2026.11.20 기준";
   }
   function renderFeatured(){
     var f = ITEMS.filter(function(it){ return it.feat; }).sort(byRecent);
@@ -683,8 +660,9 @@ footer a{color:var(--muted)}
   function renderFavs(){
     var f = state.favs.map(function(id){ return byId[id]; });
     $("favs").hidden = !f.length; $("d-favs").hidden = !f.length;
-    $("favs-grid").className = state.view === "list" ? "" : "grid";
-    $("favs-grid").innerHTML = state.view === "list" ? listHTML(f, true) : f.map(function(it){ return tileHTML(it, true); }).join("");
+    $("favs-grid").innerHTML = f.map(function(it){
+      return '<a class="rc" style="--g:'+color(it)+'" '+(it.local ? 'href="#" data-detail="'+it.id+'"' : openAttrs(it, it.links[0][1]))+'><span class="ico">'+esc(it.sym)+'</span><span><b>'+esc(it.name)+'</b><small>'+esc(groupById[it.g].name)+'</small></span></a>';
+    }).join("");
     $("favs-n").textContent = f.length; $("n-favs").textContent = f.length;
   }
   function renderRecent(){
@@ -725,7 +703,7 @@ footer a{color:var(--muted)}
         '<ul class="d-items" id="dg-'+g.id+'"'+(ex?"":" hidden")+'>'+drawerItems(g)+'</ul></div>';
       chips += '<a class="chip'+loc+'" href="#'+g.id+'" style="--g:'+g.color+'"><i class="dot"></i>'+esc(g.name)+' <b>'+n+'</b></a>';
     });
-    $("tabs").innerHTML = tabs; $("d-pages").innerHTML = dp; $("chips").innerHTML = chips;
+    $("tabs").innerHTML = tabs; $("d-pages").innerHTML = dp; 
     $("n-all").textContent = visible.length;
     var act = $("tabs").querySelector('[aria-current="page"]');
     if (act) $("tabs").scrollLeft = Math.max(0, act.offsetLeft - 40);
@@ -737,21 +715,20 @@ footer a{color:var(--muted)}
   function renderBoard(){
     var list = ITEMS.filter(function(it){ return shown(it) && matchesQuery(it); });
     var board = $("board");
-    $("all-title").innerHTML = (state.q ? "검색 결과 " : "전체 목록 ")+'<span>'+list.length+'</span>';
-    $("chips").classList.toggle("off", !!state.q);
+    $("all-title").innerHTML = (state.q ? "검색 결과 " : "전체 ")+'<span>'+list.length+'</span>';
     if (!list.length) {
       board.innerHTML = '<p class="empty">'+(state.q ? "‘"+esc(state.q)+"’에 맞는 게 없어요. 다른 말로 찾아보세요." : "지금 거르기 조건에 맞는 게 없어요.")+'</p>';
       return;
     }
-    if (state.sort === "recent" || state.q) { board.innerHTML = listHTML(list.slice().sort(byRecent), true); return; }
-    var html = "";
+    if (state.q) { board.innerHTML = listHTML(list.slice().sort(byRecent), true); return; }
+    var html = '<div class="panels">';
     GROUPS.forEach(function(g){
       var items = list.filter(function(it){ return it.g === g.id; }).sort(byRecent);
       if (!items.length) return;
-      html += '<div class="subsec'+(g.id==="local"?" local":"")+'" style="--g:'+g.color+'"><h3><i class="dot"></i>'+esc(g.name)+' <span>'+items.length+'</span><a href="#'+g.id+'">모아 보기 →</a></h3>'+
-        (g.hint ? '<p class="hint">'+esc(g.hint)+'</p>' : "")+listHTML(items, false)+'</div>';
+      html += '<section class="panel'+(g.id==="local"?" local":"")+'" style="--g:'+g.color+'"><h3><i class="dot"></i>'+esc(g.name)+' <span>'+items.length+'</span><a href="#'+g.id+'">자세히 ›</a></h3>'+
+        '<ul class="rows">'+items.map(function(it){ return ciHTML(it); }).join("")+'</ul></section>';
     });
-    board.innerHTML = html;
+    board.innerHTML = html + '</div>';
   }
   function renderTimeline(){
     var months = {};
@@ -794,9 +771,9 @@ footer a{color:var(--muted)}
     $("page").classList.toggle("off", searching || home);
     document.title = (!searching && !home && groupById[state.page]) ? groupById[state.page].name+" · 서율의 앱 서랍" : "서율의 앱 서랍";
   }
-  function renderAll(){ renderCounts(); renderFeatured(); renderFavs(); renderRecent(); renderControls(); renderBoard(); renderPage(); renderTimeline(); applyVisibility(); }
+  function renderAll(){ renderCounts(); renderFeatured(); renderFavs(); renderRecent(); renderControls(); renderBoard(); renderPage(); applyVisibility(); }
 
-  var HOME_ANCHORS = {featured:1, favs:1, recent:1, all:1, timeline:1};
+  var HOME_ANCHORS = {featured:1, favs:1, recent:1, all:1};
   function route(){
     var h = decodeURIComponent(location.hash.slice(1));
     var prev = state.page;
@@ -927,7 +904,7 @@ footer a{color:var(--muted)}
       toast(i > -1 ? "즐겨찾기에서 뺐어요" : "즐겨찾기에 넣었어요");
       return;
     }
-    if ((b = t.closest("[data-detail]"))) { if (drawer.contains(b)) closeMenu(false); openDetail(b.dataset.detail, false); return; }
+    if ((b = t.closest("[data-detail]"))) { e.preventDefault(); if (drawer.contains(b)) closeMenu(false); openDetail(b.dataset.detail, false); return; }
     if ((b = t.closest("[data-copy]"))) { copy(b.dataset.copy); return; }
     if ((b = t.closest("[data-close]"))) { closeDetail(); return; }
     if ((b = t.closest("[data-pick]"))) { pickRandom(); return; }
