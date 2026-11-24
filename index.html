@@ -208,7 +208,7 @@ a.main::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inher
 @keyframes flash{50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}}
 
 /* featured */
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
 .feat{padding:16px}
 .feat .card-top{margin-bottom:8px}
 .feat .btns{padding-top:12px}
@@ -238,7 +238,7 @@ a.main::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inher
 .rc{position:relative;flex:none;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);text-decoration:none}
 .rc:hover{box-shadow:var(--shadow);border-color:transparent}
 .rc .ico{width:34px;height:34px;border-radius:10px;font-size:.76rem}
-.rc span{display:flex;flex-direction:column;line-height:1.35}
+.rc > span:not(.ico){display:flex;flex-direction:column;line-height:1.35}
 .rc b{font-size:.88rem;font-weight:600}
 .rc small{font-size:.74rem;color:var(--faint)}
 
@@ -352,6 +352,8 @@ h1{background:linear-gradient(120deg,var(--ink) 30%,color-mix(in srgb,var(--acce
 .det .btn{height:32px;padding:0 12px;font-size:.82rem;border-radius:9px}
 .btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 88%,#fff),var(--accent));box-shadow:inset 0 1px 0 rgb(255 255 255 / .3),0 6px 14px -6px color-mix(in srgb,var(--accent) 80%,transparent)}
 .btn.icon{width:32px;padding:0}
+.btn.sm{height:30px;padding:0 12px;font-size:.8rem;font-weight:500;color:var(--muted);background:var(--glass);border:1px solid var(--line)}
+.btn.sm:hover{color:var(--ink)}
 .btn.icon[aria-pressed="true"]{color:var(--star)}
 .fb{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:14px;background:color-mix(in srgb,var(--soft) 70%,transparent);border:1px solid var(--line)}
 .fb-title{margin:0;font-size:.84rem;font-weight:700}
@@ -459,7 +461,7 @@ dialog{background:var(--surface)}
     </div>
     <div class="d-sec">
       <p class="d-label">정보</p>
-      <p class="d-info">목록 기준일 2026.11.19 · 깃허브 <a href="https://github.com/seoyulwoo1206" target="_blank" rel="noopener">seoyulwoo1206</a></p>
+      <p class="d-info">목록 기준일 2026.11.24 · 깃허브 <a href="https://github.com/seoyulwoo1206" target="_blank" rel="noopener">seoyulwoo1206</a></p>
       <p class="d-info"><kbd>/</kbd> 검색 · <kbd>Esc</kbd> 닫기</p>
     </div>
   </div>
@@ -482,7 +484,7 @@ dialog{background:var(--surface)}
   </section>
 
   <section class="sec home-only" id="recent" hidden>
-    <div class="sec-head"><h2>최근 연 것</h2></div>
+    <div class="sec-head"><h2>최근 연 것</h2><button type="button" class="btn sm" id="clear-recent">모두 지우기</button></div>
     <div class="recent" id="recent-list"></div>
   </section>
 
@@ -523,20 +525,26 @@ dialog{background:var(--surface)}
 
   var ITEMS = [
     // 게임
-    {id:"detective", g:"game", sym:"탐정", name:"탐정 사무소", kind:"웹게임", d:"2026-11-19", pub:true, feat:true,
+    {id:"detective", g:"game", sym:"탐정", name:"탐정 사무소", kind:"웹게임", d:"2026-11-20", pub:true, feat:true,
      desc:"친구들과, 혹은 혼자 AI와 하는 추리 게임 모음. 용의자 접기, 이마 게임, 알리바이 깨기, AI 심문, 일일 사건, 방탈출.",
      links:[["열기", PAGES+"detective-office/"],["코드", GH+"detective-office"]]},
-    {id:"kickoff", g:"game", sym:"킥", name:"킥오프 일레븐", kind:"웹게임", d:"2026-11-18", pub:true, feat:true,
-     desc:"24개 국가대표 팀으로 하는 11대11 풀경기 축구 게임. AI 대전, 2인 대전, 월드컵, 승부차기, 온라인 1대1.",
+    {id:"kickoff", g:"game", sym:"킥", name:"킥오프 일레븐", kind:"웹게임", d:"2026-11-23", pub:true, feat:true,
+     desc:"24개 국가대표 팀으로 하는 11대11 풀경기 축구 게임. TV 중계 시점, 전술·교체, 오프사이드·카드, 온라인 1대1. 폰은 홈 화면에 추가하면 앱처럼 실행.",
      links:[["열기", PAGES+"kickoff-eleven/"],["코드", GH+"kickoff-eleven"],["첫 버전(claude.ai)", A+"QMyJGfrGjV8fHSCxFAar3U"]]},
 
     // 앱
-    {id:"ai-biseo", g:"apps", sym:"비서", name:"AI 비서", kind:"앱", d:"2026-11-17", pub:true, feat:true,
-     desc:"화면 구석에 떠 있는 3D 캐릭터 비서. 체크메이트 일정 알림, 집중 타이머, 건강 알림, 물어보기. 윈도우·안드로이드·웹.",
-     links:[["웹에서 열기", "https://ai-biseo-mocha.vercel.app"],["코드", GH+"ai-biseo"]]},
+    {id:"ai-biseo", g:"apps", sym:"비서", name:"AI 비서", kind:"앱", d:"2026-11-21", pub:true, feat:true,
+     desc:"화면 구석에 떠 있는 3D 캐릭터 비서. 체크메이트 일정 알림, 집중 타이머, 날씨, 물어보기. 안드로이드는 APK로 설치, PC는 코드를 받아 npm start, 아이폰·태블릿은 웹으로.",
+     links:[["웹에서 열기", "https://ai-biseo-mocha.vercel.app"],["안드로이드 APK", GH+"ai-biseo/releases/latest"],["PC 버전(코드)", GH+"ai-biseo"]]},
+    {id:"sign-dict", g:"apps", sym:"수어", name:"수어 시뮬레이션 사전", kind:"웹앱", d:"2026-11-23", pub:true, feat:true,
+     desc:"한국수어 단어 541개와 지문자 40개를 3D 아바타 동작으로 보여 주는 사전. 매일 학습, 복습, 문장을 수어로 풀어 보기, 구글 로그인으로 기록 이어가기.",
+     links:[["열기", PAGES+"sign-dictionary/"],["코드", GH+"sign-dictionary"]]},
+    {id:"alarm", g:"apps", sym:"알람", name:"스마트 알람", kind:"안드로이드", d:"2026-11-21", pub:true,
+     desc:"수면 리듬을 보고 얕은 잠일 때 깨워 주는 알람. 덮어 설치해도 알람과 수면 기록이 남아요.",
+     links:[["APK 받기", GH+"SmartAlarm-releases/releases/latest"]]},
     {id:"meal-app", g:"apps", sym:"급식", name:"급식 알리미", kind:"안드로이드", d:"2026-11-16", pub:true, feat:true,
      desc:"학교를 등록하면 오늘 급식을 보여 주고 매일 정한 시간에 알림. 알레르기 19종을 등록하면 해당 메뉴를 빨갛게 표시.",
-     links:[["깃허브", GH+"geupsik-alimi"]]},
+     links:[["APK 받기", GH+"geupsik-alimi/releases/latest"],["코드", GH+"geupsik-alimi"]]},
 
     // 공부
     {id:"hs-memo", g:"study", sym:"현암", name:"현사법 암기장", kind:"사이트", d:"2026-11-03",
@@ -600,6 +608,9 @@ dialog{background:var(--surface)}
      links:[["내 것", A+"BZ2zyjQoEJw7vi7gU9LgZY"],["팀원 A", A+"KnH2TYRwVrSQbAufwkPLUV"],["팀원 B", A+"CnphKF8m6nGb5qYGMUfja1"],["팀원 C", A+"MhA2oD5fZTqkzGh8qHRjdV"],["팀원 D", A+"3koMMcg3AuV97qS9MBRhy1"]]},
 
     // 만들기·기타
+    {id:"cari-app", g:"make", sym:"캐리", name:"캐리커처 부스", kind:"PC 웹앱", d:"2026-11-13", pub:true,
+     desc:"사진 한 장을 7단계 머신러닝 파이프라인(얼굴 찾기→정제→특징점→평균과 비교→과장→그림체)으로 캐리커처로 바꾸는 부스용 앱. zip을 풀고 start.bat을 누르면 인터넷 없이 돌아가요. 코랩 노트북은 GPU 그림 서버와 그림체 학습용.",
+     links:[["zip 받기 (43MB)", PAGES+"files/caricature/caricature-booth.zip"],["코랩: 그림 서버", "https://colab.research.google.com/github/seoyulwoo1206/seoyulwoo1206.github.io/blob/main/files/caricature/caricature_server.ipynb"],["코랩: 그림체 학습", "https://colab.research.google.com/github/seoyulwoo1206/seoyulwoo1206.github.io/blob/main/files/caricature/finetune_animegan.ipynb"]]},
     {id:"stand", g:"make", sym:"거치", name:"M자 접이 노트북 거치대 설계도", kind:"사이트", d:"2026-11-19",
      desc:"3D 프린터로 뽑을 접이식 노트북 거치대 설계도.", links:[["열기", A+"3zHxwxh3ggX5QMqbr5a96S"]]},
     {id:"cari-slides", g:"make", sym:"설명", name:"캐리커처 부스 설명 슬라이드", kind:"슬라이드", d:"2026-11-13",
@@ -613,10 +624,6 @@ dialog{background:var(--surface)}
      desc:"자료를 모아 두는 페이지.", links:[["열기", A+"M1x59tYz9ThNbHigxpiAed"]]},
 
     // PC에서 만드는 중
-    {id:"cari-app", g:"local", sym:"캐리", name:"캐리커처 부스 웹앱", kind:"웹앱", local:true,
-     desc:"부스에서 찍은 사진을 Colab GPU 서버로 보내 1분 안에 캐리커처를 받아 오는 앱."},
-    {id:"alarm", g:"local", sym:"알람", name:"스마트 알람", kind:"안드로이드", local:true,
-     desc:"수면 리듬을 분석해서 깨워 주는 알람 앱."},
     {id:"backup", g:"local", sym:"백업", name:"PC → 폰 자동 백업", kind:"앱", local:true,
      desc:"정해 둔 PC 폴더의 새 파일을 서버에 올리고, 폰에서 목록을 보고 골라 받기."}
   ];
@@ -731,7 +738,7 @@ dialog{background:var(--surface)}
     return '<div class="panel"><ul class="rows">'+items.map(function(it){ return ciHTML(it, {desc:true, group:showGroup}); }).join("")+'</ul></div>';
   }
   function featHTML(it){
-    var btns = '<a class="btn primary" '+openAttrs(it, it.links[0][1])+'>열기</a><button type="button" class="btn" data-detail="'+it.id+'">자세히 ›</button>';
+    var btns = '<a class="btn primary" '+openAttrs(it, it.links[0][1])+'>'+esc(it.links[0][0])+'</a><button type="button" class="btn" data-detail="'+it.id+'">자세히 ›</button>';
     return '<article class="card feat linked" data-id="'+it.id+'" style="--g:'+color(it)+'">'+
       '<div class="card-top"><span class="ico lg">'+esc(it.sym)+'</span><span class="acts">'+starBtn(it)+'</span></div>'+
       '<span class="name">'+esc(it.name)+'</span><p class="desc">'+esc(it.desc)+'</p><div class="btns">'+btns+'</div></article>';
@@ -740,7 +747,7 @@ dialog{background:var(--surface)}
   // ---------- renders ----------
   function renderCounts(){
     var pub = ITEMS.filter(function(it){ return it.pub; }).length;
-    $("counts").textContent = "모두 "+ITEMS.length+"개 · 누구나 열 수 있는 것 "+pub+"개 · 2026.11.20 기준";
+    $("counts").textContent = "모두 "+ITEMS.length+"개 · 누구나 열 수 있는 것 "+pub+"개 · 2026.11.24 기준";
   }
   function renderFeatured(){
     var f = ITEMS.filter(function(it){ return it.feat; }).sort(byRecent);
@@ -945,6 +952,9 @@ dialog{background:var(--surface)}
     openDetail(it.id, true);
   }
   $("dice-btn").addEventListener("click", pickRandom);
+  $("clear-recent").addEventListener("click", function(){
+    state.recent = []; save(); renderRecent(); toast("최근 연 기록을 모두 지웠어요");
+  });
 
   function locate(id){
     var it = byId[id];
