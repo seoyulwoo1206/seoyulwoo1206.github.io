@@ -461,7 +461,7 @@ dialog{background:var(--surface)}
     </div>
     <div class="d-sec">
       <p class="d-label">정보</p>
-      <p class="d-info">목록 기준일 2026.11.24 · 깃허브 <a href="https://github.com/seoyulwoo1206" target="_blank" rel="noopener">seoyulwoo1206</a></p>
+      <p class="d-info">목록 기준일 2026.11.25 · 깃허브 <a href="https://github.com/seoyulwoo1206" target="_blank" rel="noopener">seoyulwoo1206</a></p>
       <p class="d-info"><kbd>/</kbd> 검색 · <kbd>Esc</kbd> 닫기</p>
     </div>
   </div>
@@ -536,6 +536,9 @@ dialog{background:var(--surface)}
     {id:"ai-biseo", g:"apps", sym:"비서", name:"AI 비서", kind:"앱", d:"2026-11-21", pub:true, feat:true,
      desc:"화면 구석에 떠 있는 3D 캐릭터 비서. 체크메이트 일정 알림, 집중 타이머, 날씨, 물어보기. 안드로이드는 APK로 설치, PC는 코드를 받아 npm start, 아이폰·태블릿은 웹으로.",
      links:[["웹에서 열기", "https://ai-biseo-mocha.vercel.app"],["안드로이드 APK", GH+"ai-biseo/releases/latest"],["PC 버전(코드)", GH+"ai-biseo"]]},
+    {id:"checkmate", g:"apps", sym:"체크", name:"체크메이트", kind:"웹앱", d:"", pub:true, feat:true,
+     desc:"오늘 할 일을 친구랑 같이 체크하는 할 일·일정 앱. 회원가입하고 바로 쓰고, AI 비서가 체크메이트 일정을 알려 줘요.",
+     links:[["열기", "https://checkmate-friends.vercel.app/"]]},
     {id:"sign-dict", g:"apps", sym:"수어", name:"수어 시뮬레이션 사전", kind:"웹앱", d:"2026-11-23", pub:true, feat:true,
      desc:"한국수어 단어 541개와 지문자 40개를 3D 아바타 동작으로 보여 주는 사전. 매일 학습, 복습, 문장을 수어로 풀어 보기, 구글 로그인으로 기록 이어가기.",
      links:[["열기", PAGES+"sign-dictionary/"],["코드", GH+"sign-dictionary"]]},
@@ -726,7 +729,7 @@ dialog{background:var(--surface)}
   function ciHTML(it, opt){
     opt = opt || {};
     var cm = '<span class="cm">'+(opt.group ? '<i class="dot"></i>'+esc(groupById[it.g].name)+'<span class="sep">·</span>' : "")+
-      esc(it.kind)+'<span class="sep">·</span>'+(it.local ? "PC 작업" : niceDate(it.d))+(it.pub ? '<span class="badge">공개</span>' : "")+'</span>';
+      esc(it.kind)+((it.local || it.d) ? '<span class="sep">·</span>'+(it.local ? "PC 작업" : niceDate(it.d)) : "")+(it.pub ? '<span class="badge">공개</span>' : "")+'</span>';
     var inner = '<span class="ico">'+esc(it.sym)+'</span><span class="ct"><span class="name">'+esc(it.name)+'</span>'+cm+(opt.desc ? '<span class="desc">'+esc(it.desc)+'</span>' : "")+'</span>';
     var main = it.local ? '<button type="button" class="main" data-acc="'+it.id+'" style="border:0;background:none;padding:0;text-align:left;cursor:pointer">'+inner+'</button>' : '<a class="main" '+openAttrs(it, it.links[0][1])+'>'+inner+'</a>';
     var open = !!accOpen[it.id], aid = "acc-"+it.id+"-"+(++accSeq);
@@ -747,7 +750,7 @@ dialog{background:var(--surface)}
   // ---------- renders ----------
   function renderCounts(){
     var pub = ITEMS.filter(function(it){ return it.pub; }).length;
-    $("counts").textContent = "모두 "+ITEMS.length+"개 · 누구나 열 수 있는 것 "+pub+"개 · 2026.11.24 기준";
+    $("counts").textContent = "모두 "+ITEMS.length+"개 · 누구나 열 수 있는 것 "+pub+"개 · 2026.11.25 기준";
   }
   function renderFeatured(){
     var f = ITEMS.filter(function(it){ return it.feat; }).sort(byRecent);
