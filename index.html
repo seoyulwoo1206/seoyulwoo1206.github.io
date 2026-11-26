@@ -461,7 +461,7 @@ dialog{background:var(--surface)}
     </div>
     <div class="d-sec">
       <p class="d-label">정보</p>
-      <p class="d-info">목록 기준일 2026.11.25 · 깃허브 <a href="https://github.com/seoyulwoo1206" target="_blank" rel="noopener">seoyulwoo1206</a></p>
+      <p class="d-info">목록 기준일 2026.11.27 · 깃허브 <a href="https://github.com/seoyulwoo1206" target="_blank" rel="noopener">seoyulwoo1206</a></p>
       <p class="d-info"><kbd>/</kbd> 검색 · <kbd>Esc</kbd> 닫기</p>
     </div>
   </div>
@@ -545,9 +545,9 @@ dialog{background:var(--surface)}
     {id:"sign-dict", g:"apps", sym:"수어", name:"수어 시뮬레이션 사전", kind:"웹앱", d:"2026-11-23", pub:true, feat:true,
      desc:"한국수어 단어 541개와 지문자 40개를 3D 아바타 동작으로 보여 주는 사전. 매일 학습, 복습, 문장을 수어로 풀어 보기, 구글 로그인으로 기록 이어가기.",
      links:[["열기", PAGES+"sign-dictionary/"],["코드", GH+"sign-dictionary"]]},
-    {id:"alarm", g:"apps", sym:"알람", name:"스마트 알람", kind:"안드로이드", d:"2026-11-21", pub:true,
-     desc:"수면 리듬을 보고 얕은 잠일 때 깨워 주는 알람. 덮어 설치해도 알람과 수면 기록이 남아요.",
-     links:[["APK 받기", GH+"SmartAlarm-releases/releases/latest"]]},
+    {id:"alarm", g:"apps", sym:"알람", name:"스마트 알람", kind:"안드로이드", d:"2026-11-25", pub:true, feat:true,
+     desc:"수면 리듬을 보고 얕은 잠일 때 깨워 주는 알람. 기본 알람 소리를 폰 알람음·잔잔한 음악·내 음악 파일·Spotify 중에서 고를 수 있고, 덮어 설치해도 알람과 수면 기록이 남아요.",
+     links:[["APK 받기", GH+"SmartAlarm-releases/releases/latest/download/SmartAlarm.apk"],["릴리스 노트", GH+"SmartAlarm-releases/releases/latest"]]},
     {id:"meal-app", g:"apps", sym:"급식", name:"급식 알리미", kind:"안드로이드", d:"2026-11-16", pub:true, feat:true,
      desc:"학교를 등록하면 오늘 급식을 보여 주고 매일 정한 시간에 알림. 알레르기 19종을 등록하면 해당 메뉴를 빨갛게 표시.",
      links:[["APK 받기", GH+"geupsik-alimi/releases/latest"],["코드", GH+"geupsik-alimi"]]},
@@ -753,7 +753,7 @@ dialog{background:var(--surface)}
   // ---------- renders ----------
   function renderCounts(){
     var pub = ITEMS.filter(function(it){ return it.pub; }).length;
-    $("counts").textContent = "모두 "+ITEMS.length+"개 · 누구나 열 수 있는 것 "+pub+"개 · 2026.11.25 기준";
+    $("counts").textContent = "모두 "+ITEMS.length+"개 · 누구나 열 수 있는 것 "+pub+"개 · 2026.11.27 기준";
   }
   function renderFeatured(){
     var f = ITEMS.filter(function(it){ return it.feat; }).sort(byRecent);
